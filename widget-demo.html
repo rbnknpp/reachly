@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reifen Müller GmbH – Demo-Seite (Shadow-DOM-Isolationstest)</title>
+    <style>
+      /* Absichtlich aggressives, "fremdes" CSS einer fiktiven Handwerker-Website,
+         um zu beweisen, dass das Widget im Shadow DOM davon unberuehrt bleibt. */
+      * {
+        box-sizing: content-box !important;
+        font-family: "Comic Sans MS", cursive !important;
+        line-height: 2.4 !important;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: repeating-linear-gradient(45deg, #ffe9a8, #ffe9a8 10px, #ffd166 10px, #ffd166 20px);
+        color: #222;
+      }
+      button {
+        all: unset !important;
+        background: red !important;
+        color: yellow !important;
+        border: 5px dashed blue !important;
+        padding: 30px !important;
+        font-size: 30px !important;
+        cursor: crosshair !important;
+        text-transform: uppercase !important;
+      }
+      input,
+      textarea {
+        border: 4px solid magenta !important;
+        background: black !important;
+        color: lime !important;
+        font-size: 24px !important;
+        padding: 12px !important;
+      }
+      h1,
+      h2,
+      h3,
+      p,
+      span,
+      div {
+        all: revert;
+        font-family: "Comic Sans MS", cursive !important;
+      }
+      a {
+        color: purple !important;
+        text-decoration: blink !important;
+      }
+      .header {
+        background: #003366;
+        color: white;
+        padding: 24px;
+        text-align: center;
+      }
+      .content {
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+      /* Extrem hoher z-index, um zu testen ob das Widget trotzdem oben liegt */
+      .noise {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        pointer-events: none;
+        background: repeating-linear-gradient(90deg, rgba(255, 0, 0, 0.03) 0 2px, transparent 2px 4px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="header">
+      <h1>Reifen Müller GmbH</h1>
+      <p>Ihr Reifenservice seit 1987 – Demo-Seite zum Testen der Shadow-DOM-Isolation</p>
+    </header>
+
+    <main class="content">
+      <h2>Willkommen</h2>
+      <p>
+        Diese Seite simuliert bewusst eine fremde, stilistisch chaotische Unternehmer-Website
+        (aggressives globales CSS, <code>all: unset</code>/<code>revert</code> auf Buttons und
+        Inputs, absurder Font, hoher z-index-Rauschlayer). Trotzdem muss unten rechts (bzw. je nach
+        Config links) sauber der Reachly-Button erscheinen – neutral, mit Systemschrift, ohne
+        Beeinflussung durch diese Styles.
+      </p>
+
+      <h3>Testformular der Host-Seite</h3>
+      <p>Dies ist absichtlich hässlich gestylt, um Style-Leaks in beide Richtungen zu erkennen:</p>
+      <input type="text" placeholder="Host-Input – sollte hässlich bleiben" />
+      <br /><br />
+      <button onclick="alert('Host-Button geklickt')">Host-Button</button>
+
+      <h3>Checkliste</h3>
+      <ul>
+        <li>Reachly-Button erscheint neutral (kein Comic Sans, keine roten/gelben Farben)</li>
+        <li>Panel-Inputs bleiben normal gestylt (kein magenta/schwarz)</li>
+        <li>Host-Button/-Input oben bleiben weiterhin hässlich (kein Leak aus dem Widget)</li>
+        <li>Widget-Button liegt über dem Rauschlayer (z-index 999999)</li>
+      </ul>
+    </main>
+
+    <!--
+      Dev-Modus (npm run dev:widget): Vite serviert das Modul direkt aus dem Quellcode.
+      Fuer den Produktions-Build stattdessen dist/widget/widget.js einbinden, z.B.:
+        npx serve dist/widget
+        <script src="http://localhost:3000/widget.js" data-key="reifen-mueller" async></script>
+    -->
+    <script type="module" src="/src/widget/main.ts" data-key="reifen-mueller"></script>
+  </body>
+</html>

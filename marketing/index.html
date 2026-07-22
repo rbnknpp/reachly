@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reachly – Kein Anruf verpasst. Kein Auftrag verloren.</title>
+<meta name="description" content="Reachly beantwortet verpasste Anrufe automatisch per SMS und WhatsApp, qualifiziert die Anfrage per KI und bucht den Termin – eine einzige Zeile Code auf Ihrer Website." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450;1,9..144,600&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3ede0;
+    --paper-2: #ece3d2;
+    --ink: #1c1912;
+    --ink-soft: #4a4436;
+    --forest: #0f3d2e;
+    --forest-2: #123f30;
+    --emerald: #1f9d6e;
+    --emerald-bright: #22b37e;
+    --amber: #d97b29;
+    --line: rgba(28, 25, 18, 0.14);
+    --cream-card: #faf6ec;
+    --radius: 6px;
+    --shadow-card: 0 2px 0 rgba(28,25,18,0.06), 0 18px 40px -20px rgba(15,61,46,0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--forest);
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .label {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 12px;
+    color: var(--emerald);
+  }
+
+  /* ===== Header ===== */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(243, 237, 224, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--forest);
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--paper);
+    font-size: 15px;
+    transform: rotate(-6deg);
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .nav-links a { text-decoration: none; color: var(--ink-soft); transition: color .15s; }
+  .nav-links a:hover { color: var(--forest); }
+  .nav-cta {
+    background: var(--forest);
+    color: var(--paper) !important;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .nav-cta:hover { background: var(--forest-2); }
+  @media (max-width: 780px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+  /* ===== Hero ===== */
+  .hero {
+    position: relative;
+    padding: 100px 32px 60px;
+    overflow: hidden;
+  }
+  .hero-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 60px;
+    align-items: center;
+  }
+  @media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 10px;
+    border: 1.5px solid var(--forest);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 28px;
+    transform: rotate(-1.2deg);
+  }
+  .stamp .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald-bright); box-shadow: 0 0 0 3px rgba(34,179,126,0.18); }
+
+  .hero h1 {
+    font-size: clamp(38px, 5.4vw, 66px);
+    line-height: 0.98;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--emerald);
+    font-weight: 450;
+  }
+  .hero p.lede {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin: 26px 0 36px;
+    line-height: 1.6;
+  }
+
+  .cta-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary {
+    background: var(--emerald-bright);
+    color: #08281c;
+    box-shadow: 0 10px 24px -8px rgba(34,179,126,0.55);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -8px rgba(34,179,126,0.6); }
+  .btn-ghost {
+    color: var(--forest);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-ghost svg { transition: transform .15s; }
+  .btn-ghost:hover svg { transform: translateX(3px); }
+
+  .trust-line { margin-top: 44px; font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; gap: 10px; }
+  .trust-line strong { color: var(--forest); }
+
+  /* Hero visual: widget mockup */
+  .hero-visual { position: relative; }
+  .phone-card {
+    background: var(--cream-card);
+    border-radius: 22px;
+    box-shadow: var(--shadow-card);
+    padding: 22px;
+    max-width: 360px;
+    margin: 0 auto;
+    transform: rotate(2.5deg);
+    border: 1px solid rgba(28,25,18,0.08);
+  }
+  .phone-card .bar { display:flex; gap:6px; margin-bottom: 16px; }
+  .phone-card .bar span { width:8px; height:8px; border-radius:50%; background: var(--line); }
+  .chat-bubble {
+    background: #eef1ec;
+    border-radius: 14px 14px 14px 4px;
+    padding: 12px 14px;
+    font-size: 14px;
+    max-width: 82%;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .chat-bubble.out {
+    background: var(--forest);
+    color: var(--paper);
+    border-radius: 14px 14px 4px 14px;
+    margin-left: auto;
+  }
+  .chat-time { font-size: 11px; color: var(--ink-soft); opacity: .7; margin: 2px 4px 14px; }
+  .widget-launcher-demo {
+    position: absolute;
+    bottom: -22px; right: 18px;
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: var(--emerald-bright);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 26px -6px rgba(34,179,126,0.6);
+    animation: pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+  .floaty-tag {
+    position: absolute;
+    top: -18px; left: -22px;
+    background: var(--paper);
+    border: 1.5px solid var(--forest);
+    border-radius: 10px;
+    padding: 9px 13px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--forest);
+    transform: rotate(-4deg);
+    box-shadow: 0 6px 16px -6px rgba(28,25,18,0.25);
+  }
+
+  /* ===== Marquee ===== */
+  .marquee-section { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-2); padding: 22px 0; overflow: hidden; }
+  .marquee-track { display: flex; gap: 64px; white-space: nowrap; animation: scroll 26s linear infinite; width: max-content; }
+  .marquee-track span { font-family:'Fraunces',serif; font-size: 18px; color: var(--ink-soft); opacity: .6; font-weight: 500; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ===== Sections generic ===== */
+  section { padding: 110px 0; position: relative; }
+  .section-head { max-width: 640px; margin-bottom: 64px; }
+  .section-head h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.05; margin-top: 14px; }
+  .section-head p { color: var(--ink-soft); font-size: 17px; margin-top: 18px; line-height: 1.6; }
+
+  /* ===== Problem stats ===== */
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-top: 20px; }
+  .stat { background: var(--cream-card); padding: 34px 28px; }
+  .stat .num { font-family:'Fraunces',serif; font-size: 46px; color: var(--forest); font-weight: 600; }
+  .stat .num span { color: var(--emerald); }
+  .stat p { color: var(--ink-soft); font-size: 14.5px; margin-top: 8px; }
+  @media (max-width: 780px) { .stat-row { grid-template-columns: 1fr; } }
+
+  /* ===== Flow / how it works ===== */
+  .flow-section { background: var(--forest); color: var(--paper); border-radius: 28px; margin: 0 32px; padding: 90px 56px; position: relative; overflow: hidden; }
+  .flow-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 85% 10%, rgba(34,179,126,0.28), transparent 55%);
+    pointer-events: none;
+  }
+  .flow-section .label { color: var(--emerald-bright); }
+  .flow-section h2 { color: var(--paper); }
+  .flow-section .section-head p { color: rgba(243,237,224,0.72); }
+
+  .flow-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; margin-top: 50px; }
+  .flow-steps::before {
+    content: "";
+    position: absolute; top: 27px; left: 5%; right: 5%; height: 1px;
+    background: repeating-linear-gradient(90deg, rgba(243,237,224,0.35) 0 8px, transparent 8px 16px);
+  }
+  .flow-step { position: relative; padding-right: 18px; }
+  .flow-step .n {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: var(--forest-2);
+    border: 1.5px solid rgba(243,237,224,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+    color: var(--emerald-bright);
+    position: relative; z-index: 1;
+    margin-bottom: 22px;
+  }
+  .flow-step h3 { color: var(--paper); font-size: 17px; margin-bottom: 8px; font-weight: 600; }
+  .flow-step p { color: rgba(243,237,224,0.65); font-size: 13.5px; line-height: 1.55; }
+  @media (max-width: 980px) {
+    .flow-steps { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .flow-steps::before { display: none; }
+    .flow-section { margin: 0 16px; padding: 60px 28px; border-radius: 20px; }
+  }
+  @media (max-width: 560px) { .flow-steps { grid-template-columns: 1fr; } }
+
+  /* ===== Features ===== */
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 20px; }
+  @media (max-width: 900px) { .feature-grid { grid-template-columns: 1fr; } }
+  .feature-card {
+    background: var(--cream-card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 34px 28px;
+    box-shadow: var(--shadow-card);
+    transition: transform .2s ease;
+  }
+  .feature-card:hover { transform: translateY(-4px); }
+  .feature-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    background: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--emerald-bright);
+    margin-bottom: 22px;
+  }
+  .feature-card h3 { font-size: 19px; margin-bottom: 10px; }
+  .feature-card p { color: var(--ink-soft); font-size: 14.5px; line-height: 1.6; }
+
+  /* ===== Embed snippet ===== */
+  .embed-section .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 900px) { .embed-section .wrap { grid-template-columns: 1fr; } }
+  .code-card {
+    background: var(--ink);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: var(--shadow-card);
+    position: relative;
+  }
+  .code-card .dots { display: flex; gap: 7px; margin-bottom: 20px; }
+  .code-card .dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .code-card .dots span:nth-child(1) { background: #e0605a; }
+  .code-card .dots span:nth-child(2) { background: #e8b64d; }
+  .code-card .dots span:nth-child(3) { background: var(--emerald-bright); }
+  .code-card code {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: #cfe8dc;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .code-card .tag { color: var(--emerald-bright); }
+  .code-card .attr { color: #e8b64d; }
+  .code-card .str { color: #a3d9c0; }
+
+  .check-list { list-style: none; padding: 0; margin: 26px 0; }
+  .check-list li { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; color: var(--ink-soft); align-items: flex-start; }
+  .check-list li svg { flex-shrink: 0; margin-top: 3px; color: var(--emerald); }
+
+  /* ===== CTA ===== */
+  .cta-section {
+    text-align: center;
+    background: linear-gradient(180deg, var(--paper-2), var(--paper));
+  }
+  .cta-section h2 { font-size: clamp(32px, 5vw, 52px); max-width: 720px; margin: 0 auto; }
+  .cta-section p.lede { max-width: 480px; margin: 22px auto 40px; color: var(--ink-soft); font-size: 17px; }
+
+  /* ===== Footer ===== */
+  footer { border-top: 1px solid var(--line); padding: 48px 0 36px; }
+  .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  footer .logo { font-size: 18px; }
+  footer .foot-links { display: flex; gap: 28px; font-size: 14px; color: var(--ink-soft); }
+  footer .foot-links a { text-decoration: none; }
+  footer .foot-links a:hover { color: var(--forest); }
+  .foot-copy { font-size: 13px; color: var(--ink-soft); margin-top: 24px; opacity: .7; }
+
+  /* reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#" class="logo"><span class="logo-mark">R</span>Reachly</a>
+    <nav class="nav-links">
+      <a href="#funktion">So funktioniert's</a>
+      <a href="#features">Funktionen</a>
+      <a href="#einbau">Einbau</a>
+      <a href="#kontakt" class="nav-cta">Demo anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="reveal in">
+      <div class="stamp"><span class="dot"></span> Für Handwerk, KFZ & Dienstleister</div>
+      <h1>Kein Anruf verpasst.<br>Kein Auftrag <em>verloren</em>.</h1>
+      <p class="lede">Reachly antwortet automatisch per SMS und WhatsApp, wenn Sie gerade unterm Auto liegen oder auf dem Dach stehen – qualifiziert die Anfrage und bucht den Termin gleich mit.</p>
+      <div class="cta-row">
+        <a href="#kontakt" class="btn btn-primary">Kostenlose Demo anfragen</a>
+        <a href="#funktion" class="btn-ghost">Wie es funktioniert
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="trust-line">
+        <strong>Eine Code-Zeile.</strong> Läuft auf jeder Website – egal ob Lovable, WordPress oder handgebaut.
+      </div>
+    </div>
+
+    <div class="hero-visual reveal in">
+      <div class="phone-card">
+        <div class="floaty-tag">📞 verpasst → 📲 in 8 Sek.</div>
+        <div class="bar"><span></span><span></span><span></span></div>
+        <div class="chat-bubble">Hallo! Wir haben Ihren Anruf leider verpasst. Worum geht's? Wir melden uns sofort.</div>
+        <div class="chat-time">14:32 · Reachly</div>
+        <div class="chat-bubble out">Hi, mein Auspuff scheppert seit heute Morgen. Können Sie diese Woche noch?</div>
+        <div class="chat-time" style="text-align:right">14:33</div>
+        <div class="chat-bubble">Klar – Donnerstag 10:00 Uhr passt bei uns. Soll ich den Termin fest buchen?</div>
+        <div class="chat-time">14:33 · Reachly</div>
+      </div>
+      <div class="widget-launcher-demo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#08281c" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>Reifendienste</span><span>·</span><span>KFZ-Werkstätten</span><span>·</span><span>Dachdecker</span><span>·</span><span>Heizungsbauer</span><span>·</span><span>Elektriker</span><span>·</span><span>Sanitär</span><span>·</span>
+    <span>Reifendienste</span><span>·</span><span>KFZ-Werkstätten</span><span>·</span><span>Dachdecker</span><span>·</span><span>Heizungsbauer</span><span>·</span><span>Elektriker</span><span>·</span><span>Sanitär</span><span>·</span>
+  </div>
+</div>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="label">Das Problem</span>
+      <h2>Während Sie arbeiten,<br>klingelt das Telefon ungehört durch.</h2>
+      <p>Kunden rufen an, während Sie unterm Auto liegen, auf dem Gerüst stehen oder gerade beim nächsten Termin sind. Die meisten legen einfach auf – und rufen den nächsten Betrieb an.</p>
+    </div>
+    <div class="stat-row reveal">
+      <div class="stat"><div class="num"><span>62%</span></div><p>der Anrufer legen auf, ohne eine Nachricht zu hinterlassen – und rufen woanders an.</p></div>
+      <div class="stat"><div class="num">8 Sek.</div><p>bis Reachly automatisch per SMS antwortet, statt Stunden später zurückzurufen.</p></div>
+      <div class="stat"><div class="num">1 Zeile</div><p>Code reicht, um Reachly auf jeder bestehenden Website einzubauen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="funktion">
+  <div class="wrap">
+    <div class="flow-section reveal">
+      <span class="label">So funktioniert's</span>
+      <div class="section-head" style="margin-bottom:0">
+        <h2>Vom verpassten Anruf<br>zum gebuchten Termin.</h2>
+        <p>Vollautomatisch, ohne dass Sie den Hörer in die Hand nehmen müssen.</p>
+      </div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="n">1</div>
+          <h3>Anruf verpasst</h3>
+          <p>Ihr Telefon klingelt, Sie können nicht rangehen – Werkstatt, Baustelle, nächster Kunde.</p>
+        </div>
+        <div class="flow-step">
+          <div class="n">2</div>
+          <h3>Sofort-SMS</h3>
+          <p>Reachly schickt automatisch eine SMS mit einem WhatsApp-Link an den Anrufer.</p>
+        </div>
+        <div class="flow-step">
+          <div class="n">3</div>
+          <h3>KI qualifiziert</h3>
+          <p>Auf WhatsApp klärt die KI das Anliegen – freundlich, schnell, rund um die Uhr.</p>
+        </div>
+        <div class="flow-step">
+          <div class="n">4</div>
+          <h3>Termin gebucht</h3>
+          <p>Passender Slot wird direkt in Ihrem Kalender reserviert – kein Hin und Her.</p>
+        </div>
+        <div class="flow-step">
+          <div class="n">5</div>
+          <h3>Bewertung angefragt</h3>
+          <p>48h nach dem Termin fragt Reachly automatisch nach einer Google-Bewertung.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="label">Direkt auf Ihrer Website</span>
+      <h2>Ein Button. Drei Wege zum Auftrag.</h2>
+      <p>Der Reachly-Button erscheint unauffällig auf Ihrer Website – Besucher entscheiden selbst, wie sie Kontakt aufnehmen.</p>
+    </div>
+    <div class="feature-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.94 9.94 0 0 0 4.84 1.23h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2z"/></svg>
+        </div>
+        <h3>WhatsApp-Chat</h3>
+        <p>Ein Klick öffnet WhatsApp mit vorausgefülltem Text. Ihr Kunde schreibt die erste Nachricht selbst – Sie antworten oder lassen die KI übernehmen.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Rückruf anfordern</h3>
+        <p>Name, Nummer, Anliegen – landet sofort in Ihrem Posteingang. Kein Anruf nötig, kein Kunde, der auflegt.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <h3>Termin buchen</h3>
+        <p>Echte freie Slots aus Ihrem Kalender, direkt buchbar – ohne Telefonat, ohne Wartezeit auf Rückruf.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="einbau" class="embed-section">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="label">In 60 Sekunden live</span>
+      <h2 style="font-size: clamp(28px, 3.6vw, 40px); margin-top: 14px;">Eine Zeile.<br>Fertig eingebaut.</h2>
+      <p style="color: var(--ink-soft); margin: 20px 0 0; font-size: 16px; line-height: 1.6;">Kein Website-Umbau, kein Entwickler nötig. Egal ob Ihre Seite mit Lovable, WordPress oder von Hand gebaut ist.</p>
+      <ul class="check-list">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Läuft isoliert – beeinflusst Ihr bestehendes Design nicht</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Lädt asynchron, verlangsamt Ihre Seite nicht</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Farbe, Position & Texte passend zu Ihrer Marke</li>
+      </ul>
+    </div>
+    <div class="code-card reveal">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <code><span class="tag">&lt;script</span>
+  <span class="attr">src</span>=<span class="str">"https://cdn.reachly.app/widget.js"</span>
+  <span class="attr">data-key</span>=<span class="str">"ihr-betrieb"</span>
+  <span class="attr">async</span><span class="tag">&gt;&lt;/script&gt;</span></code>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="kontakt">
+  <div class="wrap reveal">
+    <span class="label">Bereit?</span>
+    <h2>Lassen Sie sich zeigen,<br>wie viele Anrufe Sie gerade verpassen.</h2>
+    <p class="lede">15 Minuten, unverbindlich. Wir zeigen Ihnen Reachly live an Ihrem eigenen Beispiel.</p>
+    <a href="mailto:hallo@reachly.app" class="btn btn-primary">Demo anfragen</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <a href="#" class="logo"><span class="logo-mark">R</span>Reachly</a>
+      <div class="foot-links">
+        <a href="#funktion">So funktioniert's</a>
+        <a href="#features">Funktionen</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </div>
+    <div class="foot-copy">© 2026 Reachly – ein Produkt von Altovate. Alle Rechte vorbehalten.</div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
