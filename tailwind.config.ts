@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 // Gilt NUR fuer das Dashboard (src/dashboard). Das Widget nutzt kein Tailwind,
 // sein CSS lebt komplett isoliert im Shadow Root.
@@ -38,5 +39,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
