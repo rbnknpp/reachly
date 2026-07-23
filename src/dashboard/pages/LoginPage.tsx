@@ -65,7 +65,7 @@ export function LoginPage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_20%_20%,hsl(160_60%_92%),transparent_45%),radial-gradient(circle_at_85%_80%,hsl(160_50%_94%),transparent_40%)] bg-muted/20 p-4">
       <div className="flex w-full max-w-4xl items-center justify-center gap-16">
-        <div className="hidden shrink-0 lg:block">
+        <div className="hidden shrink-0 lg:block lg:w-[30rem]">
           <DisplayCards cards={featureCards} />
         </div>
 
