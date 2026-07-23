@@ -33,11 +33,20 @@ Deno.serve(async (req) => {
   const { data: settings } = await supabase
     .from("client_settings")
     .select(
-      "widget_accent_color, widget_position, widget_greeting, widget_whatsapp_prefill_text, widget_action_whatsapp, widget_action_callback, widget_action_booking, wa_business_number, widget_social_instagram_url, widget_action_instagram, widget_social_facebook_url, widget_action_facebook, widget_social_tiktok_url, widget_action_tiktok",
+      "widget_accent_color, widget_position, widget_greeting, widget_whatsapp_prefill_text, widget_action_whatsapp, widget_action_callback, widget_action_booking, wa_business_number, business_phone, calcom_event_type_id, widget_social_instagram_url, widget_action_instagram, widget_social_facebook_url, widget_action_facebook, widget_social_tiktok_url, widget_action_tiktok",
     )
     .eq("client_id", client.id)
     .maybeSingle();
   if (!settings) return jsonResponse({ error: "Konfiguration fehlt" }, 404);
+
+  // Cal.com-Zugangsdaten liegen separat in client_integration_secrets (keine
+  // RLS-Policies, nur per service_role lesbar) - hier nur die Existenz
+  // pruefen, der Key selbst verlaesst die Function nie.
+  const { data: secrets } = await supabase
+    .from("client_integration_secrets")
+    .select("calcom_api_key")
+    .eq("client_id", client.id)
+    .maybeSingle();
 
   return jsonResponse(
     {
@@ -47,8 +56,14 @@ Deno.serve(async (req) => {
       greeting: settings.widget_greeting,
       actions: {
         whatsapp: settings.widget_action_whatsapp && !!settings.wa_business_number,
-        callback: settings.widget_action_callback,
-        booking: settings.widget_action_booking,
+        // Rueckruf nur anbieten, wenn ueberhaupt eine erreichbare Nummer
+        // hinterlegt ist - sonst verspricht der Button einen Rueckruf, den
+        // niemand ausfuehren kann.
+        callback: settings.widget_action_callback && !!settings.business_phone,
+        // Terminbuchung braucht zwingend Event-Type UND verbundenen
+        // Cal.com-API-Key (siehe widget-slots), sonst laeuft der Flow direkt
+        // in einen Fehlerzustand.
+        booking: settings.widget_action_booking && !!settings.calcom_event_type_id && !!secrets?.calcom_api_key,
       },
       whatsapp_number: settings.wa_business_number ?? null,
       whatsapp_prefill_text: settings.widget_whatsapp_prefill_text,
