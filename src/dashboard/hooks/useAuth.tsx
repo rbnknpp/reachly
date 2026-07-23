@@ -7,6 +7,8 @@ interface AuthContextValue {
   session: Session | null;
   profile: Profile | null;
   loading: boolean;
+  passwordRecovery: boolean;
+  clearPasswordRecovery: () => void;
   signOut: () => Promise<void>;
 }
 
@@ -16,6 +18,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = React.useState<Session | null>(null);
   const [profile, setProfile] = React.useState<Profile | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [passwordRecovery, setPasswordRecovery] = React.useState(false);
 
   const loadProfile = React.useCallback(async (userId: string) => {
     const { data } = await supabase.from("profiles").select("*").eq("id", userId).single();
@@ -32,8 +35,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
+    const { data: listener } = supabase.auth.onAuthStateChange(async (event, newSession) => {
       if (!active) return;
+      if (event === "PASSWORD_RECOVERY") setPasswordRecovery(true);
       setSession(newSession);
       if (newSession) {
         await loadProfile(newSession.user.id);
@@ -53,8 +57,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signOut();
   }, []);
 
+  const clearPasswordRecovery = React.useCallback(() => setPasswordRecovery(false), []);
+
   return (
-    <AuthContext.Provider value={{ session, profile, loading, signOut }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ session, profile, loading, passwordRecovery, clearPasswordRecovery, signOut }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 

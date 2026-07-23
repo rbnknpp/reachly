@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { supabase } from "@lib/supabase";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 // fragt nur noch nach einem selbst gewaehlten Passwort.
 export function AcceptInvitePage() {
   const navigate = useNavigate();
+  const { clearPasswordRecovery } = useAuth();
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
@@ -34,6 +36,7 @@ export function AcceptInvitePage() {
       return;
     }
     toast.success("Passwort gesetzt – willkommen bei Reachly!");
+    clearPasswordRecovery();
     navigate("/", { replace: true });
   }
 

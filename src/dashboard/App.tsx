@@ -1,4 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import * as React from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AppShell } from "@/components/AppShell";
@@ -16,9 +17,26 @@ function RoleHome() {
   return <Navigate to={profile?.role === "agency" ? "/agency" : "/inbox"} replace />;
 }
 
+// Zeigt bei einem Passwort-Reset-Link (type=recovery) das Passwort-Formular,
+// statt die bereits durch den Recovery-Token hergestellte Session direkt
+// ins Dashboard weiterzuleiten.
+function RecoveryRedirect() {
+  const { passwordRecovery } = useAuth();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (passwordRecovery) {
+      navigate("/accept-invite", { replace: true });
+    }
+  }, [passwordRecovery, navigate]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <AuthProvider>
+      <RecoveryRedirect />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/accept-invite" element={<AcceptInvitePage />} />
