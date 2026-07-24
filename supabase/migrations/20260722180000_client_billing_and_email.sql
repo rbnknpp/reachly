@@ -5,8 +5,8 @@
 -- Tabelle statt Spalten auf clients, damit RLS die Zahlen komplett
 -- vor Kunden-Logins verbergen kann (clients ist fuer Kunden lesbar).
 --
--- ACHTUNG: Diese Datei liegt hier nur zur Dokumentation/Anwendung —
--- die Datenbank laeuft in einem separaten Supabase-Projekt.
+-- Am 24.07. manuell per SQL Editor auf der Live-DB (nwjalodrbalxxzrfmlir)
+-- angewendet, da noch kein CLI-Zugriff (supabase login) eingerichtet war.
 -- ============================================================
 
 create table public.client_billing (
