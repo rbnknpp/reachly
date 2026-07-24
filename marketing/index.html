@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Reachly – Kein Anruf verpasst. Kein Auftrag verloren.</title>
 <meta name="description" content="Reachly beantwortet verpasste Anrufe automatisch per SMS und WhatsApp, qualifiziert die Anfrage per KI und bucht den Termin – eine einzige Zeile Code auf Ihrer Website." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%230f3d2e'/%3E%3Ccircle cx='13' cy='27' r='2.4' fill='%23f3ede0'/%3E%3Cpath d='M13 21a6 6 0 0 1 6 6' stroke='%23f3ede0' stroke-width='2.6' stroke-linecap='round' fill='none'/%3E%3Cpath d='M13 17a10 10 0 0 1 10 10' stroke='%23f3ede0' stroke-width='2.6' stroke-linecap='round' fill='none' opacity='.85'/%3E%3Cpath d='M13 13a14 14 0 0 1 14 14' stroke='%23f3ede0' stroke-width='2.6' stroke-linecap='round' fill='none' opacity='.65'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450;1,9..144,600&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
@@ -315,10 +316,18 @@
     background: var(--forest-2);
     border: 1.5px solid rgba(243,237,224,0.35);
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
     color: var(--emerald-bright);
     position: relative; z-index: 1;
     margin-bottom: 22px;
+  }
+  .flow-step .n svg { width: 22px; height: 22px; }
+  .flow-step .n-badge {
+    position: absolute; top: -6px; right: -6px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--emerald-bright); color: var(--forest);
+    font-family: 'Archivo', sans-serif; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--forest-2);
   }
   .flow-step h3 { color: var(--paper); font-size: 17px; margin-bottom: 8px; font-weight: 600; }
   .flow-step p { color: rgba(243,237,224,0.65); font-size: 13.5px; line-height: 1.55; }
@@ -409,7 +418,16 @@
 
 <header>
   <div class="nav">
-    <a href="#" class="logo"><span class="logo-mark">R</span>Reachly</a>
+    <a href="#" class="logo">
+        <svg width="30" height="30" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="40" height="40" rx="10" fill="var(--forest)" />
+          <circle cx="13" cy="27" r="2.4" fill="var(--paper)" />
+          <path d="M13 21a6 6 0 0 1 6 6" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" fill="none" />
+          <path d="M13 17a10 10 0 0 1 10 10" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".85" />
+          <path d="M13 13a14 14 0 0 1 14 14" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".65" />
+        </svg>
+        Reachly
+      </a>
     <nav class="nav-links">
       <a href="#funktion">So funktioniert's</a>
       <a href="#features">Funktionen</a>
@@ -486,27 +504,42 @@
       </div>
       <div class="flow-steps">
         <div class="flow-step">
-          <div class="n">1</div>
+          <div class="n">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span class="n-badge">1</span>
+          </div>
           <h3>Anruf verpasst</h3>
           <p>Ihr Telefon klingelt, Sie können nicht rangehen – Werkstatt, Baustelle, nächster Kunde.</p>
         </div>
         <div class="flow-step">
-          <div class="n">2</div>
+          <div class="n">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg>
+            <span class="n-badge">2</span>
+          </div>
           <h3>Sofort-SMS</h3>
           <p>Reachly schickt automatisch eine SMS mit einem WhatsApp-Link an den Anrufer.</p>
         </div>
         <div class="flow-step">
-          <div class="n">3</div>
+          <div class="n">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M19 15l.7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7z"/></svg>
+            <span class="n-badge">3</span>
+          </div>
           <h3>KI qualifiziert</h3>
           <p>Auf WhatsApp klärt die KI das Anliegen – freundlich, schnell, rund um die Uhr.</p>
         </div>
         <div class="flow-step">
-          <div class="n">4</div>
+          <div class="n">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+            <span class="n-badge">4</span>
+          </div>
           <h3>Termin gebucht</h3>
           <p>Passender Slot wird direkt in Ihrem Kalender reserviert – kein Hin und Her.</p>
         </div>
         <div class="flow-step">
-          <div class="n">5</div>
+          <div class="n">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2l2.9 6.26L21 9.27l-4.5 4.39L17.8 21 12 17.77 6.2 21l1.3-7.34L3 9.27l6.1-1.01z"/></svg>
+            <span class="n-badge">5</span>
+          </div>
           <h3>Bewertung angefragt</h3>
           <p>48h nach dem Termin fragt Reachly automatisch nach einer Google-Bewertung.</p>
         </div>
@@ -582,7 +615,16 @@
 <footer>
   <div class="wrap">
     <div class="footer-row">
-      <a href="#" class="logo"><span class="logo-mark">R</span>Reachly</a>
+      <a href="#" class="logo">
+        <svg width="30" height="30" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="40" height="40" rx="10" fill="var(--forest)" />
+          <circle cx="13" cy="27" r="2.4" fill="var(--paper)" />
+          <path d="M13 21a6 6 0 0 1 6 6" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" fill="none" />
+          <path d="M13 17a10 10 0 0 1 10 10" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".85" />
+          <path d="M13 13a14 14 0 0 1 14 14" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".65" />
+        </svg>
+        Reachly
+      </a>
       <div class="foot-links">
         <a href="#funktion">So funktioniert's</a>
         <a href="#features">Funktionen</a>
