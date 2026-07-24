@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { ReachlyLogo } from "@/components/ui/logo";
 
 // Der Supabase-Einladungslink baut die Session automatisch auf (der
 // AuthProvider/onAuthStateChange-Listener greift bereits) - diese Seite
@@ -43,9 +44,7 @@ export function AcceptInvitePage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_20%_20%,hsl(160_60%_92%),transparent_45%),radial-gradient(circle_at_85%_80%,hsl(160_50%_94%),transparent_40%)] bg-muted/20 p-4">
       <div className="flex flex-col items-center gap-6">
-        <span className="flex h-10 w-10 -rotate-6 items-center justify-center rounded-lg bg-primary font-mono text-lg font-semibold text-primary-foreground shadow-md">
-          R
-        </span>
+        <ReachlyLogo size={40} withWordmark={false} iconClassName="shadow-md" />
         <Card className="w-full max-w-sm shadow-[0_1px_2px_rgba(15,23,42,0.04),0_20px_40px_-24px_rgba(15,23,42,0.25)]">
           <CardHeader>
             <CardTitle className="text-lg">Willkommen bei Reachly</CardTitle>
