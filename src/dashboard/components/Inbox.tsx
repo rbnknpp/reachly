@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AlertTriangle, Bot, User, Send } from "lucide-react";
+import { AlertTriangle, Bot, User, Send, Inbox as InboxIcon, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import {
   useConversations,
@@ -79,7 +79,14 @@ export function Inbox({ clientId }: { clientId: string | undefined }) {
         <div className="flex-1 overflow-y-auto">
           {isLoading && <div className="p-4 text-sm text-muted-foreground">Lädt …</div>}
           {!isLoading && filtered.length === 0 && (
-            <div className="p-4 text-sm text-muted-foreground">Keine Konversationen.</div>
+            <div className="flex flex-col items-center gap-2 p-6 text-center">
+              <InboxIcon className="h-6 w-6 text-muted-foreground/50" />
+              <p className="text-sm text-muted-foreground">
+                {conversations && conversations.length > 0
+                  ? "Keine Konversationen in diesem Filter."
+                  : "Noch keine Konversationen. Sobald jemand über das Widget schreibt oder einen verpassten Anruf erhält, erscheint der Chat hier."}
+              </p>
+            </div>
           )}
           {filtered.map((c) => (
             <ConversationListItem key={c.id} conversation={c} active={c.id === selected?.id} onClick={() => setSelectedId(c.id)} />
@@ -91,7 +98,8 @@ export function Inbox({ clientId }: { clientId: string | undefined }) {
         {selected ? (
           <ChatPanel key={selected.id} conversation={selected} clientId={clientId} onBack={() => setSelectedId(null)} />
         ) : (
-          <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
+          <div className="flex flex-1 flex-col items-center justify-center gap-2 text-sm text-muted-foreground">
+            <MessageCircle className="h-6 w-6 text-muted-foreground/50" />
             Konversation auswählen
           </div>
         )}

@@ -82,11 +82,18 @@ export function ClientSettingsForm({ clientId, variant }: Props) {
     <Card>
       <CardHeader>
         <CardTitle>Einstellungen</CardTitle>
+        <p className="text-xs text-muted-foreground">
+          Diese Angaben steuern, wie Reachly für Ihre Kunden antwortet – von der Rückrufnummer bis zum Aussehen des
+          Widgets auf Ihrer Website.
+        </p>
       </CardHeader>
       <CardContent>
         <form className="grid grid-cols-1 gap-4 md:grid-cols-2" onSubmit={handleSave}>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="business_phone">Ihre Telefonnummer (E.164)</Label>
+            <p className="text-xs text-muted-foreground">
+              Wird für Rückrufe genutzt, z. B. +4915112345678
+            </p>
             <Input
               id="business_phone"
               value={form.business_phone ?? ""}
@@ -157,7 +164,13 @@ export function ClientSettingsForm({ clientId, variant }: Props) {
             <Textarea id="missed_call_sms_text" rows={2} value={form.missed_call_sms_text ?? ""} onChange={(e) => set("missed_call_sms_text", e.target.value)} />
           </div>
 
-          <div className="md:col-span-2 mt-2 border-t border-border pt-4 text-sm font-semibold">Widget</div>
+          <div className="md:col-span-2 mt-2 border-t border-border pt-4">
+            <p className="text-sm font-semibold">Widget</p>
+            <p className="text-xs text-muted-foreground">
+              So sieht der Kontakt-Button auf Ihrer Website aus. Änderungen wirken sich sofort aus, sobald der
+              Embed-Code eingebaut ist.
+            </p>
+          </div>
 
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="widget_accent_color">Akzentfarbe</Label>
@@ -198,6 +211,10 @@ export function ClientSettingsForm({ clientId, variant }: Props) {
           </div>
           <div className="flex flex-col gap-2 md:col-span-2">
             <Label>Aktive Aktionen im Widget</Label>
+            <p className="text-xs text-muted-foreground">
+              Ein aktivierter Haken zeigt die Aktion nur an, wenn die dazugehörigen Daten auch vollständig hinterlegt
+              sind (z. B. Rückruf nur mit Telefonnummer, Terminbuchung nur mit verbundenem Cal.com).
+            </p>
             <div className="flex flex-wrap gap-4">
               <label className="flex items-center gap-2 text-sm">
                 <input
@@ -226,7 +243,13 @@ export function ClientSettingsForm({ clientId, variant }: Props) {
             </div>
           </div>
 
-          <div className="md:col-span-2 mt-2 border-t border-border pt-4 text-sm font-semibold">Social Media</div>
+          <div className="md:col-span-2 mt-2 border-t border-border pt-4">
+            <p className="text-sm font-semibold">Social Media</p>
+            <p className="text-xs text-muted-foreground">
+              Optionale Profil-Links, die zusätzlich im Widget erscheinen, sobald sie eingetragen und als sichtbar
+              markiert sind.
+            </p>
+          </div>
 
           <div className="flex flex-col gap-1.5 md:col-span-2">
             <Label htmlFor="widget_social_instagram_url">Instagram-Profil-URL</Label>

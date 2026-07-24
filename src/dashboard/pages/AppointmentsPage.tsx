@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CheckCircle2, XCircle, Ban } from "lucide-react";
+import { CheckCircle2, XCircle, Ban, CalendarClock } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAppointments, useUpdateAppointmentStatus } from "@/hooks/useAppointments";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -34,7 +34,7 @@ export function AppointmentsPage() {
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-1 flex items-center justify-between">
         <h1 className="text-lg font-semibold">Termine</h1>
         <Tabs value={tab} onValueChange={(v) => setTab(v as "upcoming" | "past")}>
           <TabsList>
@@ -43,6 +43,9 @@ export function AppointmentsPage() {
           </TabsList>
         </Tabs>
       </div>
+      <p className="mb-4 text-sm text-muted-foreground">
+        Termine, die Kunden über das Widget gebucht haben oder die manuell im Kalender eingetragen wurden.
+      </p>
 
       <div className="rounded-lg border border-border bg-card">
         <Table>
@@ -65,8 +68,13 @@ export function AppointmentsPage() {
             )}
             {!isLoading && (appointments ?? []).length === 0 && (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-sm text-muted-foreground">
-                  Keine Termine.
+                <TableCell colSpan={5} className="py-8 text-center text-sm text-muted-foreground">
+                  <div className="flex flex-col items-center gap-2">
+                    <CalendarClock className="h-6 w-6 text-muted-foreground/50" />
+                    {tab === "upcoming"
+                      ? "Keine anstehenden Termine."
+                      : "Noch keine vergangenen Termine."}
+                  </div>
                 </TableCell>
               </TableRow>
             )}

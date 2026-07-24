@@ -35,7 +35,7 @@ export function StatsPage() {
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-1 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-lg font-semibold">Statistik</h1>
         <div className="flex items-center gap-3">
           {isAgency && (
@@ -63,6 +63,9 @@ export function StatsPage() {
           </Tabs>
         </div>
       </div>
+      <p className="mb-4 text-sm text-muted-foreground">
+        Conversion-Rate zeigt, wie viele verpasste Anrufe im gewählten Zeitraum zu einem Termin geführt haben.
+      </p>
 
       {isLoading || !data ? (
         <div className="text-sm text-muted-foreground">Lädt …</div>
