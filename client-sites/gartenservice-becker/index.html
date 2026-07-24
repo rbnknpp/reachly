@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gartenservice Becker — Garten- &amp; Grabpflege in Merzig &amp; Saarburg</title>
+<meta name="description" content="Gartenservice Becker: individuelle Garten- und Grabpflege rund um Merzig &amp; Saarburg. Heckenschnitt, Rasenmähen, Beetbepflanzung, Grünschnittentsorgung — zuverlässig und persönlich.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌿%3C/text%3E%3C/svg%3E">
+
+<style>
+  :root{
+    --forest-950:#101f16;
+    --forest-900:#173423;
+    --forest-800:#204630;
+    --forest-700:#2c5b3e;
+    --moss-500:#557f56;
+    --sage-300:#a9c2a0;
+    --sage-100:#e4ecdd;
+    --cream-50:#faf6ec;
+    --cream-100:#f3ecdd;
+    --clay-500:#bd6a3e;
+    --clay-600:#a1552f;
+    --ink-900:#1c1a12;
+    --ink-700:#3c3a2e;
+    --ink-500:#6b6a5c;
+    --line:rgba(28,26,18,0.1);
+    --shadow-soft: 0 20px 50px -20px rgba(16,31,22,0.35);
+    --ff-display:'Fraunces', serif;
+    --ff-body:'Schibsted Grotesk', sans-serif;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--cream-50);
+    color:var(--ink-900);
+    font-family:var(--ff-body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  h1,h2,h3,h4{ font-family:var(--ff-display); margin:0; font-weight:600; letter-spacing:-0.01em; }
+  p{ margin:0; }
+  section{ position:relative; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding-inline:clamp(20px,5vw,48px); }
+
+  /* grain overlay */
+  .grain{
+    pointer-events:none;
+    position:fixed; inset:0; z-index:999;
+    opacity:.05;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:22px 0;
+    transition:.4s cubic-bezier(.22,1,.36,1);
+  }
+  header.scrolled{
+    padding:12px 0;
+    background:rgba(250,246,236,0.86);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:var(--ff-display); font-weight:600; font-size:1.2rem; color:var(--cream-50); transition:color .4s; }
+  header.scrolled .brand, header.scrolled .navlinks a, header.scrolled .burger{ color:var(--forest-950); }
+  .brand .mark{
+    width:34px; height:34px; border-radius:50%;
+    background:var(--forest-800);
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .brand .mark svg{ width:18px; height:18px; }
+  .navlinks{ display:flex; gap:34px; }
+  .navlinks a{
+    font-size:.94rem; color:var(--cream-50); opacity:.82;
+    position:relative; padding-bottom:3px; transition:color .4s;
+  }
+  .navlinks a::after{
+    content:''; position:absolute; left:0; right:100%; bottom:0; height:1px; background:var(--clay-500);
+    transition:right .35s cubic-bezier(.22,1,.36,1);
+  }
+  .navlinks a:hover{ opacity:1; }
+  .navlinks a:hover::after{ right:0; }
+  .nav-cta{ display:flex; align-items:center; gap:18px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--ff-body); font-weight:600; font-size:.92rem;
+    padding:12px 22px; border-radius:100px; border:1px solid transparent;
+    cursor:pointer; transition:.3s cubic-bezier(.22,1,.36,1);
+    white-space:nowrap;
+  }
+  .btn-clay{ background:var(--clay-500); color:#fff8f0; box-shadow:0 10px 24px -10px rgba(161,85,47,.7); }
+  .btn-clay:hover{ background:var(--clay-600); transform:translateY(-2px); box-shadow:0 16px 30px -12px rgba(161,85,47,.8); }
+  .btn-ghost{ border-color:currentColor; color:var(--forest-950); }
+  .btn-ghost:hover{ background:var(--forest-950); color:var(--cream-50); }
+  .btn-line{ border-bottom:1px solid currentColor; border-radius:0; padding:2px 0; }
+  .burger{ display:none; color:var(--cream-50); transition:color .4s; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex; align-items:center;
+    padding-top:120px; padding-bottom:80px;
+    background:
+      radial-gradient(1100px 600px at 82% -10%, rgba(85,127,86,.35), transparent 60%),
+      radial-gradient(900px 700px at -10% 110%, rgba(189,106,62,.18), transparent 55%),
+      linear-gradient(180deg, var(--forest-950) 0%, var(--forest-900) 60%, var(--forest-800) 100%);
+    color:var(--cream-50);
+    overflow:hidden;
+  }
+  .hero .wrap{ display:grid; grid-template-columns:1.15fr .85fr; gap:60px; align-items:center; position:relative; z-index:2; }
+  .hero-blobs{ position:absolute; inset:0; z-index:1; }
+  .blob{ position:absolute; border-radius:50%; filter:blur(2px); opacity:.5; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:.82rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--sage-300); margin-bottom:22px;
+    opacity:0; animation:rise .9s .1s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  .eyebrow::before{ content:''; width:26px; height:1px; background:var(--sage-300); }
+  .hero h1{
+    font-size:clamp(2.6rem,5.4vw,4.6rem); line-height:1.03; color:#fbf7ec;
+    opacity:0; animation:rise 1s .22s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  .hero h1 em{ font-style:italic; color:var(--clay-500); font-weight:500; }
+  .hero p.lead{
+    margin-top:24px; max-width:46ch; font-size:1.12rem; line-height:1.65; color:var(--sage-100);
+    opacity:0; animation:rise 1s .36s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  .hero-actions{ margin-top:38px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+    opacity:0; animation:rise 1s .5s cubic-bezier(.22,1,.36,1) forwards; }
+  .hero-actions .btn-ghost{ color:var(--cream-50); }
+  .hero-actions .btn-ghost:hover{ background:var(--cream-50); color:var(--forest-950); }
+
+  .hero-stats{
+    display:flex; gap:34px; margin-top:56px; padding-top:28px; border-top:1px solid rgba(250,246,236,.16);
+    opacity:0; animation:rise 1s .64s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  .hero-stats .stat b{ display:block; font-family:var(--ff-display); font-size:1.7rem; color:var(--cream-50); }
+  .hero-stats .stat span{ font-size:.82rem; color:var(--sage-300); }
+
+  .hero-card{
+    position:relative;
+    opacity:0; animation:rise 1.1s .3s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  .card-illustration{
+    aspect-ratio:.82; border-radius:28px; position:relative; overflow:hidden;
+    background:linear-gradient(160deg,#3a6448,#1d3a27 70%);
+    box-shadow:var(--shadow-soft);
+    border:1px solid rgba(250,246,236,.14);
+  }
+  .card-illustration svg{ width:100%; height:100%; }
+  .floating-chip{
+    position:absolute; left:-18px; bottom:26px;
+    background:var(--cream-50); color:var(--ink-900);
+    border-radius:16px; padding:16px 20px; box-shadow:var(--shadow-soft);
+    display:flex; align-items:center; gap:12px; max-width:230px;
+    animation:float 5s ease-in-out infinite;
+  }
+  .floating-chip .dot{ width:10px; height:10px; border-radius:50%; background:var(--clay-500); flex:none; }
+  .floating-chip b{ display:block; font-size:.86rem; }
+  .floating-chip span{ font-size:.76rem; color:var(--ink-500); }
+
+  @keyframes rise{ from{ opacity:0; transform:translateY(22px);} to{ opacity:1; transform:translateY(0);} }
+  @keyframes float{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(34px); transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-stagger.in > *{ transition-delay:calc(var(--i) * 90ms); }
+
+  /* ---------- section headers ---------- */
+  .kicker{
+    display:inline-flex; align-items:center; gap:10px; font-size:.8rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--clay-600); font-weight:600; margin-bottom:16px;
+  }
+  .kicker::before{ content:''; width:22px; height:1px; background:var(--clay-500); }
+  .section-head{ max-width:640px; }
+  .section-head h2{ font-size:clamp(2rem,3.6vw,2.9rem); color:var(--forest-950); line-height:1.08; }
+  .section-head p{ margin-top:18px; font-size:1.06rem; line-height:1.65; color:var(--ink-700); }
+
+  /* ---------- SERVICES ---------- */
+  .services{ padding:130px 0 110px; background:var(--cream-50); }
+  .service-grid{ margin-top:56px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:22px; overflow:hidden; }
+  .service-card{
+    background:var(--cream-50); padding:38px 32px; min-height:250px;
+    display:flex; flex-direction:column; gap:18px;
+    transition:.4s cubic-bezier(.22,1,.36,1);
+  }
+  .service-card:hover{ background:var(--forest-950); }
+  .service-card:hover h3, .service-card:hover p{ color:var(--cream-50); }
+  .service-card:hover .icon-wrap{ background:var(--clay-500); transform:rotate(-8deg) scale(1.06); }
+  .service-card:hover .icon-wrap svg{ stroke:#fff; }
+  .icon-wrap{
+    width:52px; height:52px; border-radius:14px; background:var(--sage-100);
+    display:flex; align-items:center; justify-content:center;
+    transition:.4s cubic-bezier(.22,1,.36,1);
+  }
+  .icon-wrap svg{ width:26px; height:26px; stroke:var(--forest-800); fill:none; stroke-width:1.6; }
+  .service-card h3{ font-size:1.24rem; color:var(--forest-950); transition:.3s; }
+  .service-card p{ font-size:.94rem; line-height:1.6; color:var(--ink-700); transition:.3s; }
+  .service-num{ margin-top:auto; font-family:var(--ff-display); font-style:italic; font-size:.85rem; color:var(--sage-300); }
+  .service-card:hover .service-num{ color:rgba(250,246,236,.4); }
+
+  /* ---------- ABOUT ---------- */
+  .about{ padding:110px 0; background:var(--forest-950); color:var(--cream-50); position:relative; overflow:hidden; }
+  .about::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(700px 500px at 90% 20%, rgba(189,106,62,.16), transparent 60%);
+  }
+  .about .wrap{ position:relative; display:grid; grid-template-columns:.9fr 1.1fr; gap:70px; align-items:start; }
+  .about .kicker{ color:var(--clay-500); }
+  .about h2{ font-size:clamp(2rem,3.6vw,2.7rem); color:var(--cream-50); line-height:1.12; }
+  .about-text p{ font-size:1.02rem; line-height:1.75; color:var(--sage-100); }
+  .about-text p + p{ margin-top:18px; }
+  .value-list{ margin-top:40px; display:grid; gap:26px; }
+  .value-item{ display:flex; gap:18px; align-items:flex-start; }
+  .value-item .n{ font-family:var(--ff-display); font-style:italic; font-size:1.5rem; color:var(--clay-500); flex:none; width:40px; }
+  .value-item h4{ font-size:1.06rem; color:var(--cream-50); margin-bottom:6px; }
+  .value-item p{ font-size:.92rem; color:var(--sage-300); line-height:1.55; }
+
+  /* ---------- PROCESS ---------- */
+  .process{ padding:130px 0; background:var(--cream-100); }
+  .process-grid{ margin-top:60px; display:grid; grid-template-columns:repeat(4,1fr); gap:36px; position:relative; }
+  .process-grid::before{
+    content:''; position:absolute; top:26px; left:8%; right:8%; height:1px;
+    background:repeating-linear-gradient(90deg, var(--forest-700) 0 8px, transparent 8px 16px);
+    opacity:.35;
+  }
+  .process-step{ position:relative; }
+  .process-step .idx{
+    width:54px; height:54px; border-radius:50%; background:var(--cream-50); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--ff-display); font-style:italic; font-size:1.2rem; color:var(--forest-800);
+    position:relative; z-index:2; box-shadow:var(--shadow-soft);
+  }
+  .process-step h4{ margin-top:22px; font-size:1.08rem; color:var(--forest-950); }
+  .process-step p{ margin-top:10px; font-size:.9rem; line-height:1.6; color:var(--ink-700); }
+
+  /* ---------- AREA ---------- */
+  .area{ padding:120px 0; background:var(--cream-50); }
+  .area .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; }
+  .area-map{ position:relative; aspect-ratio:1/1; border-radius:26px; overflow:hidden; background:var(--sage-100); }
+  .area-map svg{ width:100%; height:100%; }
+  .area-list{ margin-top:30px; display:grid; grid-template-columns:1fr 1fr; gap:14px 30px; }
+  .area-list li{ display:flex; align-items:center; gap:10px; font-size:.98rem; color:var(--ink-700); padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .area-list li::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--clay-500); flex:none; }
+
+  /* ---------- CONTACT ---------- */
+  .contact{ padding:130px 0 100px; background:linear-gradient(180deg, var(--forest-950), var(--forest-900)); color:var(--cream-50); }
+  .contact .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:70px; }
+  .contact .kicker{ color:var(--clay-500); }
+  .contact h2{ color:var(--cream-50); font-size:clamp(2rem,3.6vw,2.7rem); }
+  .contact-info{ margin-top:34px; display:grid; gap:22px; }
+  .contact-info a, .contact-info .row{
+    display:flex; align-items:center; gap:16px; padding:18px 20px; border:1px solid rgba(250,246,236,.16);
+    border-radius:16px; transition:.3s;
+  }
+  .contact-info a:hover{ background:rgba(250,246,236,.06); border-color:rgba(250,246,236,.32); }
+  .contact-info .icon{ width:38px; height:38px; border-radius:10px; background:rgba(189,106,62,.22); display:flex; align-items:center; justify-content:center; flex:none; }
+  .contact-info .icon svg{ width:18px; height:18px; stroke:var(--clay-500); fill:none; stroke-width:1.7; }
+  .contact-info b{ display:block; font-size:.98rem; }
+  .contact-info span{ font-size:.82rem; color:var(--sage-300); }
+  .hours-table{ margin-top:8px; width:100%; border-collapse:collapse; }
+  .hours-table td{ padding:9px 0; font-size:.9rem; color:var(--sage-100); border-bottom:1px dashed rgba(250,246,236,.14); }
+  .hours-table td:last-child{ text-align:right; color:var(--cream-50); font-weight:600; }
+
+  .form-card{ background:var(--cream-50); color:var(--ink-900); border-radius:22px; padding:38px; box-shadow:var(--shadow-soft); }
+  .form-card h3{ font-size:1.3rem; color:var(--forest-950); }
+  .form-card p.sub{ margin-top:8px; font-size:.9rem; color:var(--ink-500); }
+  .field{ margin-top:18px; }
+  .field label{ display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-500); margin-bottom:7px; }
+  .field input, .field textarea{
+    width:100%; border:1px solid var(--line); border-radius:12px; padding:13px 15px;
+    font-family:var(--ff-body); font-size:.96rem; background:var(--cream-100); color:var(--ink-900);
+    transition:.25s;
+  }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--clay-500); background:#fff; }
+  .field textarea{ resize:vertical; min-height:100px; }
+  .form-card .btn{ width:100%; justify-content:center; margin-top:22px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background:var(--forest-950); color:var(--sage-300); padding:56px 0 30px; border-top:1px solid rgba(250,246,236,.1); }
+  .foot-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; }
+  .foot-brand{ display:flex; align-items:center; gap:10px; font-family:var(--ff-display); font-size:1.1rem; color:var(--cream-50); }
+  .foot-links{ display:flex; gap:30px; flex-wrap:wrap; }
+  .foot-links a{ font-size:.88rem; opacity:.85; }
+  .foot-links a:hover{ opacity:1; text-decoration:underline; }
+  .foot-bottom{ margin-top:36px; padding-top:24px; border-top:1px solid rgba(250,246,236,.1); display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:.8rem; opacity:.6; }
+  .legal-block{ display:none; margin-top:30px; padding-top:30px; border-top:1px solid rgba(250,246,236,.1); font-size:.85rem; line-height:1.7; color:var(--sage-100); }
+  .legal-block.open{ display:block; }
+  .legal-block h5{ font-family:var(--ff-display); font-size:1.05rem; color:var(--cream-50); margin-bottom:10px; }
+  .legal-block + .legal-block{ margin-top:10px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .navlinks{ display:none; }
+    .burger{ display:flex; width:38px; height:38px; align-items:center; justify-content:center; border-radius:50%; border:1px solid currentColor; }
+    .hero .wrap, .about .wrap, .area .wrap, .contact .wrap{ grid-template-columns:1fr; }
+    .hero-card{ order:-1; max-width:360px; margin:0 auto 20px; }
+    .service-grid{ grid-template-columns:repeat(2,1fr); }
+    .process-grid{ grid-template-columns:repeat(2,1fr); row-gap:50px; }
+    .process-grid::before{ display:none; }
+    .area-list{ grid-template-columns:1fr; }
+  }
+  @media (max-width:640px){
+    .service-grid{ grid-template-columns:1fr; }
+    .hero-stats{ flex-wrap:wrap; row-gap:18px; }
+    .foot-top{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="brand">
+        <span class="mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e4ecdd" stroke-width="1.6"><path d="M12 21V10M12 10C12 6 9 3 5 3C5 7 8 10 12 10ZM12 10C12 6 15 3 19 3C19 7 16 10 12 10Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Gartenservice&nbsp;Becker
+      </a>
+      <ul class="navlinks">
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#ueberuns">Über uns</a></li>
+        <li><a href="#ablauf">Ablauf</a></li>
+        <li><a href="#gebiet">Einsatzgebiet</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:+4915750684213" class="btn btn-ghost" style="display:none" id="navPhone">☎ 0157 50684213</a>
+        <a href="#kontakt" class="btn btn-clay">Anfrage senden</a>
+      </div>
+      <div class="burger" id="burger">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5H16M2 9H16M2 13H16" stroke-linecap="round"/></svg>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero-blobs" aria-hidden="true">
+    <svg width="100%" height="100%" style="position:absolute;inset:0;">
+      <circle class="blob" cx="88%" cy="10%" r="220" fill="#4f7a56" opacity=".25"/>
+      <circle class="blob" cx="8%" cy="95%" r="260" fill="#bd6a3e" opacity=".14"/>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="eyebrow">Garten- &amp; Grabpflege · Merzig &amp; Saarburg</div>
+      <h1>Ihr Garten<br>in <em>besten Händen.</em></h1>
+      <p class="lead">Individuelle Lösungen, professionelle Umsetzung und zuverlässige Kommunikation – für Gärten und Gräber, die das ganze Jahr über gepflegt aussehen.</p>
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn btn-clay">Kostenlos beraten lassen</a>
+        <a href="tel:+4915750684213" class="btn btn-ghost">☎ 0157&nbsp;50684213</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>2024</b><span>gegründet in Bietzen</span></div>
+        <div class="stat"><b>6+</b><span>Leistungen im Angebot</span></div>
+        <div class="stat"><b>2</b><span>Regionen: Merzig &amp; Saarburg</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="card-illustration">
+        <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#557f56"/>
+              <stop offset="1" stop-color="#173423"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="480" fill="url(#g1)"/>
+          <g opacity=".9" stroke="#e4ecdd" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M200 420V210"/>
+            <path d="M200 210C160 210 120 170 120 110C170 110 200 150 200 210Z"/>
+            <path d="M200 250C240 250 280 210 280 150C230 150 200 190 200 250Z"/>
+            <path d="M200 300C170 300 145 275 145 240C180 240 200 265 200 300Z"/>
+            <path d="M200 340C230 340 255 315 255 280C220 280 200 305 200 340Z"/>
+          </g>
+          <circle cx="330" cy="70" r="34" fill="#bd6a3e" opacity=".85"/>
+          <g stroke="#e4ecdd" stroke-width="2" opacity=".5">
+            <path d="M40 420H360" stroke-dasharray="2 10" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+      <div class="floating-chip">
+        <span class="dot"></span>
+        <div>
+          <b>Nächster Termin frei</b>
+          <span>Vor-Ort-Beratung diese Woche</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEISTUNGEN ================= -->
+<section class="services" id="leistungen">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">Leistungen</div>
+      <h2>Alles, was Ihr Garten &amp; Grab braucht — aus einer Hand.</h2>
+      <p>Von der regelmäßigen Rasenpflege bis zur würdevollen Grabgestaltung: Wir übernehmen die Arbeit, damit Sie sich zurücklehnen können.</p>
+    </div>
+
+    <div class="service-grid reveal-stagger">
+      <div class="service-card reveal" style="--i:0">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 21V10M12 10C12 6 9 3 5 3C5 7 8 10 12 10ZM12 10C12 6 15 3 19 3C19 7 16 10 12 10Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Gartenpflege</h3>
+        <p>Regelmäßige Pflege für gesunde, gepflegte Gärten – Rückschnitt, Unkrautentfernung und Bodenpflege im vereinbarten Rhythmus.</p>
+        <span class="service-num">01</span>
+      </div>
+
+      <div class="service-card reveal" style="--i:1">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 3v6M9 9h6M6 21h12M8 21c0-5 1-9 4-9s4 4 4 9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Grabpflege</h3>
+        <p>Würdevolle, liebevolle Grabpflege: Reinigen, Bepflanzen und Gießen – ganzjährig im Abo oder als Einzelauftrag.</p>
+        <span class="service-num">02</span>
+      </div>
+
+      <div class="service-card reveal" style="--i:2">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M4 18C4 10 8 5 12 5C16 5 20 10 20 18" stroke-linecap="round"/><path d="M4 18H20M9 14L7 12M15 14L17 12M12 12V9" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Heckenschnitt</h3>
+        <p>Fachgerechter Form- und Pflegeschnitt für Hecken jeder Größe – sauber, gerade und termingerecht.</p>
+        <span class="service-num">03</span>
+      </div>
+
+      <div class="service-card reveal" style="--i:3">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M4 20C4 20 4 14 8 14C10 14 10 17 12 17C14 17 14 13 17 13C20 13 20 20 20 20" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20H21" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Rasenmähen</h3>
+        <p>Regelmäßiges Mähen und sauberer Kantenschnitt für einen makellosen Rasen – auch für größere Flächen.</p>
+        <span class="service-num">04</span>
+      </div>
+
+      <div class="service-card reveal" style="--i:4">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 21V13M12 13C9.5 13 7.5 11 7.5 8.5C10 8.5 12 10.5 12 13ZM12 13C14.5 13 16.5 11 16.5 8.5C14 8.5 12 10.5 12 13Z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="5" r="2"/></svg>
+        </div>
+        <h3>Beetbepflanzung</h3>
+        <p>Saisonale Bepflanzung mit Blumen und Stauden – individuell auf Standort und Geschmack abgestimmt.</p>
+        <span class="service-num">05</span>
+      </div>
+
+      <div class="service-card reveal" style="--i:5">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M5 8L7 20H17L19 8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 8H21M9 8V5C9 3.9 9.9 3 11 3H13C14.1 3 15 3.9 15 5V8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Grünschnittentsorgung</h3>
+        <p>Wir kümmern uns um die fachgerechte Abholung und Entsorgung Ihres Grünschnitts – ohne Aufwand für Sie.</p>
+        <span class="service-num">06</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ÜBER UNS ================= -->
+<section class="about" id="ueberuns">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">Über uns</div>
+      <h2>Mit Herz und Handschlag für Ihren Garten.</h2>
+    </div>
+    <div class="about-text reveal">
+      <p>Gartenservice Becker ist seit 2024 mit Sitz in Bietzen bei Merzig für Sie im Einsatz – persönlich, zuverlässig und mit einem Blick fürs Detail. Ob wöchentliche Rasenpflege, saisonale Beetgestaltung oder würdevolle Grabpflege: Wir hören zu, planen gemeinsam mit Ihnen und setzen um, was besprochen wurde.</p>
+      <p>Kurze Wege, klare Absprachen und ein Handschlag, auf den Verlass ist – dafür steht Gartenservice Becker im Raum Merzig &amp; Saarburg.</p>
+
+      <div class="value-list">
+        <div class="value-item">
+          <span class="n">01</span>
+          <div><h4>Individuelle Lösungen</h4><p>Jeder Garten, jedes Grab ist anders – wir passen unsere Arbeit an Ihre Wünsche an, nicht umgekehrt.</p></div>
+        </div>
+        <div class="value-item">
+          <span class="n">02</span>
+          <div><h4>Professionelle Umsetzung</h4><p>Sauberes Werkzeug, geübte Hände, verlässliche Ergebnisse – bei jedem Einsatz.</p></div>
+        </div>
+        <div class="value-item">
+          <span class="n">03</span>
+          <div><h4>Zuverlässige Kommunikation</h4><p>Sie erreichen uns direkt per Telefon oder E-Mail – Terminabsprachen ohne Umwege.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABLAUF ================= -->
+<section class="process" id="ablauf">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">So geht's</div>
+      <h2>Vom ersten Anruf bis zum gepflegten Garten.</h2>
+    </div>
+    <div class="process-grid reveal-stagger">
+      <div class="process-step reveal" style="--i:0">
+        <div class="idx">01</div>
+        <h4>Kontakt aufnehmen</h4>
+        <p>Rufen Sie an, schreiben Sie eine E-Mail oder nutzen Sie unser Kontaktformular.</p>
+      </div>
+      <div class="process-step reveal" style="--i:1">
+        <div class="idx">02</div>
+        <h4>Vor-Ort-Termin</h4>
+        <p>Wir schauen uns Garten oder Grab gemeinsam mit Ihnen an und besprechen Ihre Wünsche.</p>
+      </div>
+      <div class="process-step reveal" style="--i:2">
+        <div class="idx">03</div>
+        <h4>Persönliches Angebot</h4>
+        <p>Sie erhalten ein transparentes, unverbindliches Angebot – ohne versteckte Kosten.</p>
+      </div>
+      <div class="process-step reveal" style="--i:3">
+        <div class="idx">04</div>
+        <h4>Zuverlässige Umsetzung</h4>
+        <p>Termingerecht, sauber und im vereinbarten Rhythmus – einmalig oder dauerhaft.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EINSATZGEBIET ================= -->
+<section class="area" id="gebiet">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">Einsatzgebiet</div>
+      <h2 style="font-size:clamp(2rem,3.6vw,2.7rem);color:var(--forest-950);">Zuhause im Landkreis Merzig-Wadern &amp; Saarburg.</h2>
+      <p style="margin-top:18px;font-size:1.02rem;line-height:1.65;color:var(--ink-700);max-width:48ch;">Unser Standort ist Bietzen bei Merzig – von dort sind wir schnell bei Ihnen, egal ob Garten oder Friedhof.</p>
+      <ul class="area-list">
+        <li>Merzig</li><li>Bietzen</li>
+        <li>Saarburg</li><li>Mettlach</li>
+        <li>Beckingen</li><li>Wadern</li>
+        <li>Perl</li><li>Losheim am See</li>
+      </ul>
+      <a href="tel:+4915750684213" class="btn btn-line" style="margin-top:30px;">Nicht dabei? Einfach anrufen &amp; nachfragen →</a>
+    </div>
+    <div class="area-map reveal">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="400" fill="#e4ecdd"/>
+        <circle cx="200" cy="200" r="170" fill="none" stroke="#557f56" stroke-width="1" stroke-dasharray="3 8" opacity=".6"/>
+        <circle cx="200" cy="200" r="115" fill="none" stroke="#557f56" stroke-width="1" stroke-dasharray="3 8" opacity=".6"/>
+        <circle cx="200" cy="200" r="60" fill="none" stroke="#557f56" stroke-width="1" stroke-dasharray="3 8" opacity=".6"/>
+        <circle cx="200" cy="200" r="10" fill="#bd6a3e"/>
+        <circle cx="200" cy="200" r="22" fill="#bd6a3e" opacity=".18"/>
+        <text x="200" y="238" text-anchor="middle" font-family="Schibsted Grotesk, sans-serif" font-size="13" fill="#173423" font-weight="600">Bietzen · Merzig</text>
+        <g font-family="Schibsted Grotesk, sans-serif" font-size="11" fill="#3c3a2e">
+          <text x="290" y="110">Saarburg</text>
+          <text x="70" y="90">Wadern</text>
+          <text x="80" y="320">Perl</text>
+          <text x="300" y="310">Mettlach</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KONTAKT ================= -->
+<section class="contact" id="kontakt">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">Kontakt</div>
+      <h2>Lassen Sie uns über Ihren Garten sprechen.</h2>
+      <p style="margin-top:16px;color:var(--sage-100);font-size:1.02rem;max-width:44ch;">Melden Sie sich telefonisch, per E-Mail oder über das Formular – wir melden uns schnellstmöglich zurück.</p>
+
+      <div class="contact-info">
+        <a href="tel:+4915750684213">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 5c0 8 7 15 15 15l2-4-6-2-2 2c-2.5-1-4.5-3-5.5-5.5l2-2-2-6-4 2Z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div><b>0157 50684213</b><span>Mo–Fr während der Öffnungszeiten erreichbar</span></div>
+        </a>
+        <a href="mailto:gartenservicebecker@yahoo.com">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div><b>gartenservicebecker@yahoo.com</b><span>Antwort in der Regel innerhalb von 24 Std.</span></div>
+        </a>
+        <div class="row">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4"/></svg></span>
+          <div><b>Bietzen · 66663 Merzig</b><span>Einsatzgebiet Merzig &amp; Saarburg</span></div>
+        </div>
+      </div>
+
+      <table class="hours-table">
+        <tr><td>Herbst / Winter</td><td>Mo–Fr 09:00–18:00 Uhr</td></tr>
+        <tr><td>Frühling / Sommer</td><td>Mo–Fr 07:30–16:30 Uhr</td></tr>
+        <tr><td>Samstag</td><td>nach Vereinbarung</td></tr>
+      </table>
+    </div>
+
+    <form class="form-card reveal" id="contactForm" action="mailto:gartenservicebecker@yahoo.com" method="post" enctype="text/plain">
+      <h3>Unverbindliche Anfrage</h3>
+      <p class="sub">Kurz beschreiben, worum es geht – den Rest besprechen wir am Telefon.</p>
+      <div class="field">
+        <label for="f-name">Name</label>
+        <input id="f-name" name="Name" type="text" placeholder="Ihr Name" required>
+      </div>
+      <div class="field">
+        <label for="f-contact">Telefon oder E-Mail</label>
+        <input id="f-contact" name="Kontakt" type="text" placeholder="Wie erreichen wir Sie?" required>
+      </div>
+      <div class="field">
+        <label for="f-msg">Nachricht</label>
+        <textarea id="f-msg" name="Nachricht" placeholder="Garten- oder Grabpflege, Ort, gewünschter Zeitraum ..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-clay">Anfrage absenden</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a href="#top" class="foot-brand">
+        <span class="mark" style="width:30px;height:30px;background:var(--forest-800);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e4ecdd" stroke-width="1.6"><path d="M12 21V10M12 10C12 6 9 3 5 3C5 7 8 10 12 10ZM12 10C12 6 15 3 19 3C19 7 16 10 12 10Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Gartenservice Becker
+      </a>
+      <ul class="foot-links">
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#ueberuns">Über uns</a></li>
+        <li><a href="#gebiet">Einsatzgebiet</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="#" data-legal="impressum">Impressum</a></li>
+        <li><a href="#" data-legal="datenschutz">Datenschutz</a></li>
+      </ul>
+    </div>
+
+    <div class="legal-block" id="impressum">
+      <h5>Impressum</h5>
+      <p>Angaben gemäß § 5 TMG<br>
+      Gartenservice Becker<br>
+      Bietzen · 66663 Merzig<br>
+      Telefon: 0157 50684213<br>
+      E-Mail: gartenservicebecker@yahoo.com<br>
+      <em>[Vollständiger Name und Anschrift lt. Gewerbeanmeldung hier ergänzen]</em></p>
+    </div>
+    <div class="legal-block" id="datenschutz">
+      <h5>Datenschutz</h5>
+      <p>Diese Website verwendet keine Tracking-Cookies. Über das Kontaktformular übermittelte Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage genutzt. <em>[Vollständige Datenschutzerklärung hier ergänzen]</em></p>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Gartenservice Becker · Bietzen bei Merzig</span>
+      <span>Garten- &amp; Grabpflege im Raum Merzig &amp; Saarburg</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const header = document.getElementById('siteHeader');
+  const navPhone = document.getElementById('navPhone');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 40;
+    header.classList.toggle('scrolled', scrolled);
+    navPhone.style.display = scrolled ? 'inline-flex' : 'none';
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('[data-legal]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const block = document.getElementById(a.dataset.legal);
+      block.classList.toggle('open');
+      block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+</script>
+
+</body>
+</html>
