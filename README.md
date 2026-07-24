@@ -18,8 +18,9 @@ mit klarer Zuständigkeit.
   23.07. (Passwort-Reset, Login-Overlap) sind dorthin portiert.
 - **Schema-Änderungen nur hier** unter `supabase/migrations/` — das Dashboard
   konsumiert das Schema nur (`src/types/database.ts` dort spiegelt es).
-- Offen: Migration `20260722180000_client_billing_and_email.sql` auf der
-  Supabase-DB anwenden.
+- Offen: Deployment-Schritte in `docs/DEPLOYMENT.md` ausführen (beide
+  Migrationen, Function-Secrets, whatsapp-webhook + send-review-requests
+  deployen, Meta-Webhook konfigurieren).
 - `altovate-GmbH/reachly-dashboard` und `altovate-GmbH/reachly-website` sind
   Alt-Stände (ersetzt durch reachly-hosting-shell bzw. reachly) — nicht mehr
   dort arbeiten. Robins Lovable-Projekt „lovelier-reach“ ist tot (GitHub-Sync
