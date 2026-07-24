@@ -82,7 +82,18 @@ Verifizierung Tage bis Wochen:
 - Ohne Kalender-Konfiguration bietet der Bot keine Termine an, sondern
   übergibt an den Betrieb (bewusst so gebaut).
 
-## 7. Bewertungs-Automation
+## 7. E-Mail-Kanal (optional)
+
+Die Function `email-inbound` nimmt eingehende Mails als JSON-POST an
+(Header `x-inbound-secret` = Secret `EMAIL_INBOUND_SECRET`, ebenfalls per
+`supabase secrets set` setzen; Deploy mit `--no-verify-jwt`). Zuordnung über
+`client_settings.inbound_email_address` (pflegt der Mandant auf der
+„Verbindungen"-Seite). Als Zubringer eignet sich z. B. Cloudflare Email
+Routing mit einem Mini-Worker, der `{to, from, from_name, subject, text}`
+weiterleitet. E-Mail-Konversationen starten bewusst als `human_handoff` —
+Antworten laufen vorerst über das eigene Postfach des Betriebs.
+
+## 8. Bewertungs-Automation
 
 Läuft automatisch, sobald Migration + Secrets + Deploy (Schritte 1-3) durch
 sind. Pro Mandant nötig: `google_review_url` und eine SMS-Absendernummer
