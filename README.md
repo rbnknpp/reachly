@@ -6,7 +6,7 @@ mit klarer Zuständigkeit.
 | Repo | Zuständigkeit | Deployment |
 | --- | --- | --- |
 | `rbnknpp/reachly` (dieses) | **Widget** (`src/widget`) + **Supabase-Backend** (`supabase/` — Schema-Migrationen & Edge Functions) | Widget-CDN / Supabase |
-| `altovate-GmbH/reachly-dashboard` | **Dashboard** (Agentur + Kunden), TanStack Start | Lovable (Robins Projekt „lovelier-reach") |
+| `altovate-GmbH/reachly-hosting-shell` | **Dashboard** (Agentur + Kunden), TanStack Start | Lovable → https://reachly-dashboard.lovable.app |
 | `altovate-GmbH/reachly` | **Marketing-Landingpage** | Lovable → https://reachly-erreichbarkeit.lovable.app |
 
 ## Wichtig
