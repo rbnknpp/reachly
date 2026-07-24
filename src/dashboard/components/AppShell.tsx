@@ -1,7 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { Inbox, CalendarClock, BarChart3, Building2, Settings, LogOut } from "lucide-react";
+import { Inbox, CalendarClock, BarChart3, Building2, Settings, LogOut, HelpCircle, Info } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
+import { ReachlyLogo } from "@/components/ui/logo";
 
 const navItemClass = ({ isActive }: { isActive: boolean }) =>
   cn(
@@ -18,11 +19,8 @@ export function AppShell() {
     <div className="flex min-h-screen flex-col md:flex-row">
       <aside className="flex shrink-0 flex-col justify-between border-b border-border bg-card p-4 md:w-56 md:border-b-0 md:border-r">
         <div>
-          <div className="mb-7 flex items-center gap-2 px-2">
-            <span className="flex h-7 w-7 -rotate-6 items-center justify-center rounded-md bg-primary font-mono text-sm font-semibold text-primary-foreground">
-              R
-            </span>
-            <span className="text-lg font-semibold tracking-tight">Reachly</span>
+          <div className="mb-7 px-2">
+            <ReachlyLogo size={28} />
           </div>
           <nav className="flex flex-row gap-1 md:flex-col">
             {profile?.role === "agency" && (
@@ -49,6 +47,15 @@ export function AppShell() {
                 Einstellungen
               </NavLink>
             )}
+            <div className="my-2 h-px bg-border md:my-1" />
+            <NavLink to="/info" className={navItemClass}>
+              <Info className="h-4 w-4" />
+              Über Reachly
+            </NavLink>
+            <NavLink to="/hilfe" className={navItemClass}>
+              <HelpCircle className="h-4 w-4" />
+              Hilfe
+            </NavLink>
           </nav>
         </div>
         <div className="mt-6 flex items-center justify-between rounded-md border border-border bg-muted/40 px-3 py-2.5">

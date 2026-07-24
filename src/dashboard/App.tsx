@@ -11,6 +11,8 @@ import { AppointmentsPage } from "@/pages/AppointmentsPage";
 import { StatsPage } from "@/pages/StatsPage";
 import { ClientSettingsPage } from "@/pages/ClientSettingsPage";
 import { AcceptInvitePage } from "@/pages/AcceptInvitePage";
+import { InfoPage } from "@/pages/InfoPage";
+import { FaqPage } from "@/pages/FaqPage";
 
 function RoleHome() {
   const { profile } = useAuth();
@@ -76,6 +78,8 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/info" element={<InfoPage />} />
+          <Route path="/hilfe" element={<FaqPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
