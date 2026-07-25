@@ -36,7 +36,7 @@ const generalFaq: FaqItem[] = [
   {
     question: "Wann wird die Google-Bewertungsanfrage verschickt?",
     answer:
-      'Standardmäßig 48 Stunden nach einem abgeschlossenen Termin – die Verzögerung lässt sich in den Mandanten-Einstellungen zwischen 1 und 336 Stunden anpassen. Voraussetzung ist ein hinterlegter Google-Bewertungslink.',
+      "Die Verzögerung lässt sich in den Mandanten-Einstellungen bereits einstellen (Standard 48 Stunden, 1–336 möglich) und ein Google-Bewertungslink hinterlegen. Der automatische Versand selbst ist aber noch in Entwicklung und aktuell nicht aktiv.",
   },
 ];
 

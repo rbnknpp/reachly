@@ -26,7 +26,7 @@ const flowSteps = [
   {
     icon: Star,
     title: "Bewertung angefragt",
-    description: "48 Stunden nach dem Termin fragt Reachly automatisch nach einer Google-Bewertung.",
+    description: "Geplant: 48 Stunden nach dem Termin automatisch nach einer Google-Bewertung fragen. Dieser letzte Schritt ist im Datenmodell vorbereitet, aber im Versand noch nicht aktiv.",
   },
 ];
 
