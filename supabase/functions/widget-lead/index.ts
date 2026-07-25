@@ -4,6 +4,7 @@
 // die Lead-Nachricht als erste eingehende Nachricht an.
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { generateAndSendAiReply } from "../_shared/ai.ts";
 
 interface LeadBody {
   key?: string;
@@ -83,6 +84,11 @@ Deno.serve(async (req) => {
   if (msgError) {
     return jsonResponse({ error: "Nachricht konnte nicht gespeichert werden" }, 500);
   }
+
+  // Bewusst awaited statt "fire and forget": Deno Edge Functions koennen nach
+  // der Response jederzeit beendet werden, ein nicht abgewarteter Aufruf
+  // wuerde also riskieren, dass die KI-Antwort nie fertig verarbeitet wird.
+  await generateAndSendAiReply(supabase, conversation.id);
 
   return jsonResponse({ ok: true });
 });
