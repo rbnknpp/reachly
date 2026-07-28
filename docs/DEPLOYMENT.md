@@ -126,6 +126,29 @@ supabase secrets set \
   ohnehin verlangt). Kunden ohne E-Mail-Adresse werden übersprungen
   (`status = skipped`), z. B. wenn der Termin auf anderem Weg angelegt wurde.
 
+## 10. KI-Live-Chat (Marketing-Seite + Dashboard)
+
+Eine einzige Function `ai-chat` bedient zwei Oberflächen mit jeweils eigenem,
+kuratiertem Wissen (kein RAG, keine Tools — reine Wissensfragen mit kurzem
+System-Prompt):
+
+- **Marketing** (`reachly-marketing`, öffentlich, kein Login): Produktfragen
+  von Interessenten, Wissen direkt aus FAQ/Feature-Texten der Landingpage.
+- **Dashboard** (`reachly-hosting-shell`, eingeloggt): Bedienfragen zum
+  Dashboard, rollenabhängig (Agentur sieht zusätzlich Mandanten-Verwaltung).
+
+```bash
+supabase functions deploy ai-chat --no-verify-jwt
+```
+
+`--no-verify-jwt` ist nötig, weil die Marketing-Seite keinen Supabase-Login
+hat. Schutz gegen Missbrauch läuft über IP-basiertes Rate-Limit
+(`check_rate_limit`, 20 Anfragen / 5 Min. pro IP und Oberfläche) statt Auth.
+
+Secret: `ANTHROPIC_API_KEY` (bereits für `whatsapp-webhook` gesetzt, wird
+mitverwendet). Ohne gesetztes Secret antwortet die Function mit einem
+freundlichen Hinweistext statt zu crashen — nichts geht kaputt.
+
 ## Architektur-Kurzreferenz
 
 ```
@@ -134,6 +157,8 @@ Kunde schreibt WhatsApp ──▶ whatsapp-webhook ──▶ Claude (Tools: Slot
    Buchung, Übergabe) ──▶ Antwort per Graph API, alles im Posteingang
 Termin vorbei ──▶ pg_cron ──▶ send-review-requests ──▶ SMS mit Google-Link
 Termin in 48h ──▶ pg_cron ──▶ send-appointment-reminders ──▶ E-Mail per Resend
+Frage im Chat-Widget (Website/Dashboard) ──▶ ai-chat ──▶ Claude mit
+   kuratiertem Wissen ──▶ direkte Antwort im Widget
 ```
 
 KI-Verhalten pro Mandant steuerbar über `client_settings`: `ai_enabled`,
