@@ -100,6 +100,32 @@ sind. Pro Mandant nötig: `google_review_url` und eine SMS-Absendernummer
 (`sms_sender_number`, Provisionierung über den Einstellungen-Button).
 Wartezeit: `review_delay_hours` (Default 48h nach Terminende).
 
+## 9. Terminerinnerung per E-Mail (48h vorher)
+
+Bereits deployt und per Cron aktiv (`send-appointment-reminders`, alle
+15 Minuten), braucht aber noch einen echten E-Mail-Anbieter, um tatsächlich
+zu verschicken — bis dahin werden fällige Erinnerungen als `skipped`
+markiert, nichts geht kaputt.
+
+```bash
+supabase secrets set \
+  RESEND_API_KEY=re_... \
+  REMINDER_FROM_EMAIL="Reachly <erinnerung@reachly.app>"
+```
+
+- **Anbieter:** [Resend](https://resend.com) — Account anlegen, eine
+  Absender-Domain verifizieren (DNS-Einträge bei der Domain setzen), dort
+  einen API-Key erzeugen.
+- Ohne verifizierte Domain lässt Resend nur Versand an die eigene
+  Account-E-Mail zu (Sandbox-Modus) — für echte Kunden-Mails ist die
+  Domain-Verifizierung also Pflicht, nicht optional.
+- `REMINDER_FROM_EMAIL` ist optional, Default siehe Function-Code.
+- Pro Endkunde nötig: eine gespeicherte E-Mail-Adresse
+  (`end_customers.email` — wird seit dem Fix in `widget-book` bei jeder
+  Terminbuchung übers Widget automatisch mitgespeichert, da Cal.com sie
+  ohnehin verlangt). Kunden ohne E-Mail-Adresse werden übersprungen
+  (`status = skipped`), z. B. wenn der Termin auf anderem Weg angelegt wurde.
+
 ## Architektur-Kurzreferenz
 
 ```
@@ -107,6 +133,7 @@ Anruf verpasst ──▶ twilio-voice-webhook/-status ──▶ SMS mit wa.me-Li
 Kunde schreibt WhatsApp ──▶ whatsapp-webhook ──▶ Claude (Tools: Slots,
    Buchung, Übergabe) ──▶ Antwort per Graph API, alles im Posteingang
 Termin vorbei ──▶ pg_cron ──▶ send-review-requests ──▶ SMS mit Google-Link
+Termin in 48h ──▶ pg_cron ──▶ send-appointment-reminders ──▶ E-Mail per Resend
 ```
 
 KI-Verhalten pro Mandant steuerbar über `client_settings`: `ai_enabled`,

@@ -91,7 +91,7 @@ Deno.serve(async (req) => {
 
   const { data: endCustomer, error: ecError } = await supabase
     .from("end_customers")
-    .upsert({ client_id: client.id, phone, name }, { onConflict: "client_id,phone" })
+    .upsert({ client_id: client.id, phone, name, email }, { onConflict: "client_id,phone" })
     .select("id")
     .single();
   if (ecError || !endCustomer) {
