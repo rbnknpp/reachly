@@ -173,6 +173,24 @@ supabase secrets set \
 - Ohne gesetztes `RESEND_API_KEY` wird der Einladungslink weiterhin
   erzeugt (Log-Warnung), aber nicht verschickt.
 
+## 12. Passwort-vergessen
+
+`request-password-reset` erzeugt (wie `invite-client-user`) den Supabase-
+Recovery-Link selbst und verschickt ihn gebrandet per Resend statt über
+Supabases generische Mail. Nutzt dieselben Secrets (`DASHBOARD_URL`,
+`RESEND_API_KEY`, `INVITE_FROM_EMAIL`) - keine zusätzliche Einrichtung
+nötig, sofern Abschnitt 11 schon erledigt ist.
+
+```bash
+supabase functions deploy request-password-reset --no-verify-jwt
+```
+
+`--no-verify-jwt` ist nötig, weil der Nutzer beim Passwort-Zurücksetzen
+per Definition ausgeloggt ist. Schutz gegen Missbrauch über IP-Rate-Limit
+(5 Anfragen / 15 Min.) statt Auth. Antwort ist bewusst immer identisch
+("Falls ein Konto mit dieser E-Mail existiert...") unabhängig davon, ob
+die Adresse tatsächlich registriert ist - verhindert User-Enumeration.
+
 ## Architektur-Kurzreferenz
 
 ```
