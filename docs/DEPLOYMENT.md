@@ -149,6 +149,30 @@ Secret: `ANTHROPIC_API_KEY` (bereits für `whatsapp-webhook` gesetzt, wird
 mitverwendet). Ohne gesetztes Secret antwortet die Function mit einem
 freundlichen Hinweistext statt zu crashen — nichts geht kaputt.
 
+## 11. Kunden-Einladung (Login-Zugang)
+
+`invite-client-user` erzeugt den Supabase-Einladungslink selbst
+(`generateLink`, verschickt keine E-Mail) und schickt ihn per Resend in
+einer Reachly-gebrandeten Mail - Supabases eigene Einladungs-Mail ist
+generisch (Absender `noreply@mail.app.supabase.io`, kein Branding) und
+landet bei echten Empfängern zuverlässig im Spam-Ordner.
+
+```bash
+supabase secrets set \
+  DASHBOARD_URL=https://<echte-dashboard-domain> \
+  INVITE_FROM_EMAIL="Reachly <einladung@verora.app>"
+```
+
+- **`DASHBOARD_URL`** unbedingt aktuell halten - zeigt sie auf einen
+  falschen Host/Port, führt der Einladungslink ins Leere
+  ("Verbindung fehlgeschlagen"). Für lokale Tests der aktuelle
+  Dashboard-Dev-Port (z. B. `http://localhost:5176`), sobald ein echtes
+  Deployment steht die Produktions-URL.
+- `INVITE_FROM_EMAIL` ist optional, Default siehe Function-Code - nutzt
+  wie `REMINDER_FROM_EMAIL` die aktuell verifizierte `verora.app`-Domain.
+- Ohne gesetztes `RESEND_API_KEY` wird der Einladungslink weiterhin
+  erzeugt (Log-Warnung), aber nicht verschickt.
+
 ## Architektur-Kurzreferenz
 
 ```
