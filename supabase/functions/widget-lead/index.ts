@@ -1,15 +1,17 @@
 // POST /functions/v1/widget-lead
-// Body: { key, name, phone, concern? }
+// Body: { key, name, phone, email?, concern? }
 // Legt end_customer (falls neu) + eine neue Konversation (Kanal 'sms') +
 // die Lead-Nachricht als erste eingehende Nachricht an.
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
 import { generateAndSendAiReply } from "../_shared/ai.ts";
+import { sendResendEmail } from "../_shared/email.ts";
 
 interface LeadBody {
   key?: string;
   name?: string;
   phone?: string;
+  email?: string;
   concern?: string;
 }
 
@@ -27,6 +29,7 @@ Deno.serve(async (req) => {
   const key = body.key?.trim();
   const name = body.name?.trim();
   const phone = body.phone?.trim();
+  const email = body.email?.trim();
   const concern = body.concern?.trim();
 
   if (!key || !name || !phone) {
@@ -45,7 +48,7 @@ Deno.serve(async (req) => {
 
   const { data: client } = await supabase
     .from("clients")
-    .select("id")
+    .select("id, name")
     .eq("slug", key)
     .eq("active", true)
     .maybeSingle();
@@ -53,7 +56,7 @@ Deno.serve(async (req) => {
 
   const { data: endCustomer, error: ecError } = await supabase
     .from("end_customers")
-    .upsert({ client_id: client.id, phone, name }, { onConflict: "client_id,phone" })
+    .upsert({ client_id: client.id, phone, name, ...(email ? { email } : {}) }, { onConflict: "client_id,phone" })
     .select("id")
     .single();
   if (ecError || !endCustomer) {
@@ -89,6 +92,23 @@ Deno.serve(async (req) => {
   // der Response jederzeit beendet werden, ein nicht abgewarteter Aufruf
   // wuerde also riskieren, dass die KI-Antwort nie fertig verarbeitet wird.
   await generateAndSendAiReply(supabase, conversation.id);
+
+  // Kurze Eingangsbestaetigung per E-Mail - unabhaengig von KI/SMS, nur
+  // wenn der Kunde freiwillig eine Adresse angegeben hat. Scheitert bewusst
+  // still (fehlendes RESEND_API_KEY o.ae.), kein Fehler fuer den Kunden.
+  if (email) {
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    const fromAddress = Deno.env.get("LEAD_CONFIRMATION_FROM_EMAIL") ?? "Reachly <hallo@reachly.app>";
+    if (resendApiKey) {
+      await sendResendEmail({
+        apiKey: resendApiKey,
+        from: fromAddress,
+        to: email,
+        subject: `${client.name}: Ihre Nachricht ist angekommen`,
+        html: `<p>Hey, wir haben Ihre Nachricht empfangen. Wir melden uns innerhalb der nächsten 24 Stunden bei Ihnen.</p>`,
+      });
+    }
+  }
 
   return jsonResponse({ ok: true });
 });

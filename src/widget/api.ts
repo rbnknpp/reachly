@@ -24,6 +24,7 @@ export interface LeadPayload {
   key: string;
   name: string;
   phone: string;
+  email?: string;
   concern?: string;
 }
 

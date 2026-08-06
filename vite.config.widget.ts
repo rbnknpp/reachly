@@ -33,4 +33,11 @@ export default defineConfig({
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
   },
+  // Ohne explizite Entry-Punkte scannt Vites Dependency-Optimizer beim Dev-
+  // Server-Start alle HTML-Dateien im Projekt-Root - inklusive der
+  // Dashboard-index.html mit ihren "@/"-Aliassen, die diese Config gar nicht
+  // kennt (nur "@widget" ist hier aliasiert). Das bricht den Scan komplett ab.
+  optimizeDeps: {
+    entries: ["widget-demo.html", "src/widget/main.ts"],
+  },
 });

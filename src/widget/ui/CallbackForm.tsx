@@ -11,6 +11,7 @@ interface Props {
 export function CallbackForm({ widgetKey }: Props) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [concern, setConcern] = useState("");
   const [status, setStatus] = useState<Status>("idle");
 
@@ -21,7 +22,13 @@ export function CallbackForm({ widgetKey }: Props) {
     if (!canSubmit || status === "submitting") return;
     setStatus("submitting");
     try {
-      await submitLead({ key: widgetKey, name: name.trim(), phone: phone.trim(), concern: concern.trim() || undefined });
+      await submitLead({
+        key: widgetKey,
+        name: name.trim(),
+        phone: phone.trim(),
+        email: email.trim() || undefined,
+        concern: concern.trim() || undefined,
+      });
       setStatus("success");
     } catch {
       setStatus("error");
@@ -69,6 +76,15 @@ export function CallbackForm({ widgetKey }: Props) {
           value={phone}
           required
           onInput={(e) => setPhone((e.target as HTMLInputElement).value)}
+        />
+      </div>
+      <div class="reachly-field">
+        <label for="reachly-cb-email">E-Mail (optional)</label>
+        <input
+          id="reachly-cb-email"
+          type="email"
+          value={email}
+          onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
         />
       </div>
       <div class="reachly-field">
