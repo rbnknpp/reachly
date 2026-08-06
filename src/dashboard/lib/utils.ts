@@ -36,3 +36,25 @@ export function formatDate(iso: string): string {
 export function hoursSince(iso: string): number {
   return (Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60);
 }
+
+/**
+ * supabase-js wirft bei einem non-2xx Edge-Function-Aufruf nur einen
+ * generischen FunctionsHttpError ("Edge Function returned a non-2xx status
+ * code") - die eigentliche, hilfreiche Fehlermeldung steckt im JSON-Body der
+ * Response unter error.context. Hier ausgepackt, damit Nutzer:innen sehen,
+ * was wirklich schiefging (z. B. "Twilio ist noch nicht konfiguriert").
+ */
+export async function functionErrorMessage(error: unknown): Promise<string> {
+  if (error && typeof error === "object" && "context" in error) {
+    const context = (error as { context?: unknown }).context;
+    if (context instanceof Response) {
+      try {
+        const body = (await context.clone().json()) as { error?: string };
+        if (body?.error) return body.error;
+      } catch {
+        // Body war kein JSON - Fallback unten.
+      }
+    }
+  }
+  return error instanceof Error ? error.message : "Unbekannter Fehler";
+}

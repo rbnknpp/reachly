@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@lib/supabase";
+import { functionErrorMessage } from "@/lib/utils";
 import type { Conversation, ConversationWithCustomer, Message } from "@schema/database";
 
 export function useConversations(clientId: string | undefined) {
@@ -100,7 +101,7 @@ export function useSendManualReply() {
       const { error } = await supabase.functions.invoke("send-manual-reply", {
         body: { conversation_id: conversationId, body },
       });
-      if (error) throw error;
+      if (error) throw new Error(await functionErrorMessage(error));
     },
   });
 }

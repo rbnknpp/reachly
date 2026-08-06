@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@lib/supabase";
+import { functionErrorMessage } from "@/lib/utils";
 import type { Client, ClientSettings, Profile } from "@schema/database";
 
 export function useClients() {
@@ -59,7 +60,7 @@ export function useInviteClientUser() {
   return useMutation({
     mutationFn: async (input: { client_id: string; email: string; display_name?: string }) => {
       const { data, error } = await supabase.functions.invoke("invite-client-user", { body: input });
-      if (error) throw error;
+      if (error) throw new Error(await functionErrorMessage(error));
       return data as { ok: true; user_id: string };
     },
     onSuccess: () => {
@@ -86,7 +87,7 @@ export function useProvisionTwilioNumber(clientId: string | undefined) {
       const { data, error } = await supabase.functions.invoke("provision-twilio-number", {
         body: { client_id: clientId },
       });
-      if (error) throw error;
+      if (error) throw new Error(await functionErrorMessage(error));
       return data as { ok: true; phone_number: string };
     },
     onSuccess: () => {
