@@ -10,9 +10,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+const WIDGET_BASE_URL = (import.meta.env.VITE_WIDGET_BASE_URL as string | undefined) || "https://cdn.reachly.app";
+
 function EmbedCodeBox({ slug }: { slug: string }) {
   const [copied, setCopied] = React.useState(false);
-  const snippet = `<script src="https://cdn.reachly.app/widget.js" data-key="${slug}" async></script>`;
+  const snippet = `<script src="${WIDGET_BASE_URL}/widget.js" data-key="${slug}" async></script>`;
 
   async function copy() {
     await navigator.clipboard.writeText(snippet);
